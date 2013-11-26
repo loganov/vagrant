@@ -1,0 +1,69 @@
+# Managed by puppet - do not modify
+#
+# See /usr/share/postfix/main.cf.dist for a commented, more complete version
+#
+smtpd_banner = $myhostname ESMTP $mail_name
+biff = no
+
+# appending .domain is the MUA's job.
+append_dot_mydomain = no
+
+# Uncomment the next line to generate "delayed mail" warnings
+#delay_warning_time = 4h
+readme_directory = no
+
+# TODO - should this be a generic name for relay hosts?
+myhostname = <%= scope.lookupvar('::fqdn') %>
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+mydomain = <%= @mydomain %>
+myorigin = $mydomain
+mydestination = <%= scope.lookupvar('::fqdn') -%>, localhost.<%= scope.lookupvar('::domain') -%>, localhost
+<% if @smtp_relay -%>
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 <%= @relay_networks %>
+inet_interfaces = all
+<% else %>
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+relayhost = <%= @relay_host -%>:<%= @relay_port %>
+inet_interfaces = loopback-only
+<% end %>
+<% if @relay_domains != '' -%>
+relay_domains = <%= @relay_domains %>
+<% end -%>
+<% if @relay_username != '' and @relay_password != '' -%>
+smtp_sasl_auth_enable = yes
+smtp_sasl_security_options = noanonymous
+smtp_sasl_password_maps = hash:/etc/postfix/relay_password
+<% end -%>
+<% if @tls and @tls_bundle and @tls_package -%>
+smtp_use_tls = yes
+smtp_tls_security_level = encrypt
+smtp_tls_note_starttls_offer = yes
+smtp_tls_CAfile = <%= @tls_bundle %>
+<% end -%>
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_protocols = ipv4
+
+# Allow connections from trusted networks only.
+smtpd_client_restrictions = <%= @smtpd_client_restrictions %>
+
+# Don't talk to mail systems that don't know their own hostname.
+# With Postfix < 2.3, specify reject_unknown_hostname.
+#smtpd_helo_restrictions = reject_unknown_helo_hostname
+<% if @smtpd_helo_restrictions %>smtpd_helo_restrictions = <%= @smtpd_helo_restrictions %><% end %>
+
+# Don't accept mail from domains that don't exist.
+#smtpd_sender_restrictions = reject_unknown_sender_domain
+<% if @smtpd_sender_restrictions %>smtpd_sender_restrictions = <%= @smtpd_sender_restrictions %><% end %>
+
+# Whitelisting: local clients may specify any destination domain.
+smtpd_recipient_restrictions = <%= @smtpd_recipient_restrictions %>
+
+# Block clients that speak too early.
+smtpd_data_restrictions = <%= @smtpd_data_restrictions %>
+
+<% if @main_options_hash and ! @main_options_hash.empty? -%>
+<% @main_options_hash.each do |option,value| %>
+<% end -%>
+<%= option %> = <%= value %> <% end %>

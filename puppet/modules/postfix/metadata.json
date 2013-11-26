@@ -1,0 +1,42 @@
+{
+  "name": "evenup-postfix",
+  "version": "0.5.0",
+  "source": "UNKNOWN",
+  "author": "Justin Lambert <jlambert@letsevenup.com>",
+  "license": "Apache",
+  "summary": "Installs and manages the postfix service.",
+  "description": "Removes sendmail and installs postfix.  Configures each server to relay off central outgoing relay servers",
+  "project_page": "https://github.com/evenup/evenup-postfix",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 3.2.0"
+    }
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "CHANGELOG": "2f231b23ccf2d66f67cc48da57b13c5e",
+    "Gemfile": "f690c7696f4b4faf3db2d1f502bf325c",
+    "LICENSE": "6a34c40bb8fa2134a463a814bae7dbe6",
+    "Modulefile": "c169984a56a78a584e17bccb56c2d2e5",
+    "README.md": "528a434d794f596a441f199edc9c00f9",
+    "Rakefile": "5151df4f03dff05562dd69e2c798da03",
+    "manifests/config.pp": "c8e502a86b86acc482ac6b09c8724024",
+    "manifests/init.pp": "c1c30208e845043a9354737e203e7f3a",
+    "manifests/install.pp": "ea476178766632a6524ddf506d093f4e",
+    "manifests/logging/beaver.pp": "34e10bc01c08f39d6bca4e67ae980e21",
+    "manifests/monitoring/sensu.pp": "fb6ac7abde2fba0701f5c5d77c92e5eb",
+    "manifests/params.pp": "185699df65db6ff8a90ed2137da076ad",
+    "manifests/service.pp": "6cf4f82e07627fa8872052c08b36ea01",
+    "spec/classes/postfix_config_spec.rb": "3113319943b73d838dbb98b1a189f19c",
+    "spec/classes/postfix_init_spec.rb": "b65396f7cda99145a7b2860c88a65d68",
+    "spec/classes/postfix_install_spec.rb": "4d45f8b03d4a12a0e11b17861ac285df",
+    "spec/classes/postfix_service_spec.rb": "75605c026c0da6d4239a31755f6767f7",
+    "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
+    "templates/main.cf.erb": "024fe7e1d6289304bd76716a2b070cc5",
+    "templates/master.cf.erb": "1a6eccd23f7345ce1527e91c2a211a4d",
+    "templates/relay_password.erb": "347cc3fccf6a8fbc95cd4bc6de91582b"
+  }
+}
